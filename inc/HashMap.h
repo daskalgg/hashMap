@@ -31,10 +31,11 @@ namespace CTSL //Concurrent Thread Safe Library
             {
                 delete [] hashTable;
             }
+
             //Copy and Move of the HashMap are not supported at this moment
             HashMap(const HashMap&) = delete;
             HashMap(HashMap&&) = delete;
-            HashMap& operator=(const HashMap&) = delete;  
+            HashMap& operator=(const HashMap&) = delete;
             HashMap& operator=(HashMap&&) = delete;
         
             //Function to find an entry in the hash map matching the key.
@@ -42,23 +43,20 @@ namespace CTSL //Concurrent Thread Safe Library
             //If key is not found, function returns false.
             bool find(const K &key, V &value) const 
             {
-                size_t hashValue = hashFn(key) % hashSize ;
-                return hashTable[hashValue].find(key, value);
+                return hashTable[hash(key)].find(key, value);
             }
 
             //Function to insert into the hash map.
             //If key already exists, update the value, else insert a new node in the bucket with the <key, value> pair.
             void insert(const K &key, const V &value) 
             {
-                size_t hashValue = hashFn(key) % hashSize ;
-                hashTable[hashValue].insert(key, value);
+                hashTable[hash(key)].insert(key, value);
             }
 
             //Function to remove an entry from the bucket, if found
             void erase(const K &key) 
             {
-                size_t hashValue = hashFn(key) % hashSize ;
-                hashTable[hashValue].erase(key);
+                hashTable[hash(key)].erase(key);
             }   
 
             //Function to clean up the hasp map, i.e., remove all entries from it
@@ -74,6 +72,11 @@ namespace CTSL //Concurrent Thread Safe Library
             HashBucket<K, V> * hashTable;
             F hashFn;
             const size_t hashSize;
+
+            // Hash the key and mod the key.
+            inline size_t hash(const  K &key) const {
+                return hashFn(key) % hashSize;
+            }
     };
 }
 #endif
