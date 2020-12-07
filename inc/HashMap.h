@@ -73,7 +73,7 @@ namespace CTSL //Concurrent Thread Safe Library
             F hashFn;
             const size_t hashSize;
 
-            // Hash the key and mod the key.
+            // Hash and mod the key.
             inline size_t hash(const  K &key) const {
                 return hashFn(key) % hashSize;
             }
