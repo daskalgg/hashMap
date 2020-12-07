@@ -1,11 +1,10 @@
 #include <string>
 #include <thread>
-#include "HashMap.h"
+#include "../inc/HashMap.h"
 
 void testSingleThreadStringKey()
 {
     CTSL::HashMap<std::string, int> stringMap(1001);
-
     stringMap.insert("test1", 200);
     stringMap.insert("test2", 670);
     stringMap.insert("test3", 203);
